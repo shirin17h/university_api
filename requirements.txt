@@ -1,3 +1,1 @@
-fastapi==
-uvicorn[standard]==0.32.0
-sqlalchemy
+fastapi==0.115
