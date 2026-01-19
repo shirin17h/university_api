@@ -5,8 +5,18 @@ from .database import get_db
 from . import models
 from .schemas import StudentCreate, StudentResponse , CourseResponse, CourseCreate , EnrollmentCreate , EnrollmentResponse
 
-app = FastAPI()
 
+import os
+app = FastAPI()
+@app.get("/debug-env")
+def debug_env():
+    return {
+        "DATABASE_URL": os.getenv("DATABASE_URL")
+    }
+#for local  debugging
+@app.get("/debug-db-url")
+def debug_db_url():
+    return {"DATABASE_URL": os.getenv("DATABASE_URL")}
 
 @app.get("/")
 def read_root():
@@ -14,9 +24,8 @@ def read_root():
 
 
 @app.get("/test-db")
-def test_db(db: Session = Depends(get_db)):
-    return {"message": "Database connection successful"}
-
+def test_db():
+    return {"ok": True}
 
 @app.post("/students/", response_model=StudentResponse)
 def create_student(student: StudentCreate, db: Session = Depends(get_db)):
