@@ -5,6 +5,8 @@ from .database import get_db
 from . import models
 from .schemas import StudentCreate, StudentResponse , CourseResponse, CourseCreate , EnrollmentCreate , EnrollmentResponse
 
+from .database import Base, engine
+Base.metadata.create_all(bind=engine)
 
 import os
 app = FastAPI()
