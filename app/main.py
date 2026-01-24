@@ -4,12 +4,29 @@ from sqlalchemy import text
 from .database import get_db
 from . import models
 from .schemas import StudentCreate, StudentResponse , CourseResponse, CourseCreate , EnrollmentCreate , EnrollmentResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
 Base.metadata.create_all(bind=engine)
 
 import os
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",  # Vite local frontend
+        "https://your-frontend.up.railway.app",  # later
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+
 @app.get("/debug-env")
 def debug_env():
     return {
